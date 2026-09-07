@@ -8,10 +8,9 @@ long-running Python jobs.
 [![Downloads](https://img.shields.io/pypi/dm/runscope.svg)](https://pypistats.org/packages/runscope)
 ![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)
 
-<!-- DEMO: replace the line below with the uploaded GIF once available.
-     Convert runscope_demo.mp4 to a GIF and drag it into a GitHub issue or commit it
-     to docs/, then paste its URL here as: ![RunScope demo](URL) -->
-<p align="center"><em>(demo GIF goes here)</em></p>
+<p align="center">
+  <img src="docs/runscope_demo.gif" alt="RunScope demo: honest ETAs on a hidden heavy-tail job" width="820">
+</p>
 
 Ordinary progress bars assume the rest of your job looks like the part that already
 ran. That assumption breaks exactly when it matters, which is when the expensive work

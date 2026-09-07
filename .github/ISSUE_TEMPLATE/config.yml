@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Just tried it? Tell me how it went
+    url: https://github.com/GeoGizmodo/runscope/issues/new
+    about: Even a one-line "worked on my 50k-file job" or "the ETA was off here" helps a lot.
+  - name: PyPI package
+    url: https://pypi.org/project/runscope/
+    about: Install with pip install runscope
