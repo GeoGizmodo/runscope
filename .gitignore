@@ -1,0 +1,19 @@
+# build artifacts
+dist/
+build/
+*.egg-info/
+__pycache__/
+*.pyc
+
+# local runscope history / config
+.runscope/
+
+# secrets / env (never commit)
+.env
+*.token
+*.pem
+
+# editor / OS
+.vscode/
+.idea/
+.DS_Store

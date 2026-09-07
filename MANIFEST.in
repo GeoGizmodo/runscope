@@ -1,0 +1,6 @@
+include README.md
+include LICENSE
+include CHANGELOG.md
+recursive-include runscope *.py
+global-exclude *.pyc
+global-exclude __pycache__/*
