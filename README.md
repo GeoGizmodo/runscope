@@ -5,18 +5,13 @@ long-running Python jobs.
 
 [![PyPI](https://img.shields.io/pypi/v/runscope.svg)](https://pypi.org/project/runscope/)
 ![Python](https://img.shields.io/pypi/pyversions/runscope.svg)
+[![Downloads](https://img.shields.io/pypi/dm/runscope.svg)](https://pypistats.org/packages/runscope)
 ![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)
 
-```python
-from runscope import trange           # drop-in for tqdm
-
-for i in trange(48000, key="terrain_analysis"):
-    process(tile(i))
-```
-
-```text
-terrain_analysis |########------------| 38% 17492/48000 | 1h20m left (1h12m-1h31m) | high | [Padawan]
-```
+<!-- DEMO: replace the line below with the uploaded GIF once available.
+     Convert runscope_demo.mp4 to a GIF and drag it into a GitHub issue or commit it
+     to docs/, then paste its URL here as: ![RunScope demo](URL) -->
+<p align="center"><em>(demo GIF goes here)</em></p>
 
 Ordinary progress bars assume the rest of your job looks like the part that already
 ran. That assumption breaks exactly when it matters, which is when the expensive work
@@ -26,29 +21,59 @@ it learns your recurring jobs so each run's estimate gets better than the last.
 ## Install
 
 ```bash
-pip install runscope        # free, local, zero dependencies
+pip install runscope
 ```
 
-Pure standard library. No account, no network, no config required.
+Free, local, zero dependencies. Pure standard library. No account, no network, no
+config required.
 
-## Quick start
+## 30-second example
 
 ```python
 import runscope
 
-# wrap any loop
 for item in runscope.track(items, key="my_job"):
     process(item)
+```
 
-# drop-in replacement for tqdm
+```text
+my_job |########------------| 38% 17492/48000 | 1h20m left (1h12m-1h31m) | high | [Padawan]
+```
+
+Drop-in replacement for tqdm:
+
+```python
 from runscope import trange
 for i in trange(10000, key="my_job"):
     ...
-
-# tell it how big each item is for stronger estimates
-for path in runscope.track(files, key="ingest", weight=lambda p: p.stat().st_size):
-    process(path)
 ```
+
+## Why RunScope instead of tqdm?
+
+tqdm is great, and RunScope is a drop-in for it. The difference is the ETA.
+
+| | tqdm / plain bar | RunScope |
+|---|---|---|
+| ETA method | mean rate of items seen so far | size-weighted, recency-aware, with optional future sampling |
+| Shows a range | no (one fake exact number) | yes (honest low-high interval) |
+| Heavy tail at the end | badly under-estimates, then "hangs" | reacts, or predicts it up front by sampling |
+| Learns recurring jobs | no | yes, calibrates automatically after ~3 runs |
+| Extra dependencies | a few | none |
+
+On heterogeneous or back-loaded workloads (where the cost is hidden from the early
+items), a plain count-based bar is routinely 60 to 280 percent off. RunScope's
+future-sampling cuts that to low single digits:
+
+```text
+shape           actual   plain bar   off   RunScope   off
+heavy-tail        3.9s        1.6s   60%       3.9s    0%
+heavy-middle      4.3s        1.3s   70%       4.3s    0%
+heavy-front       4.3s       16.4s  278%       4.3s    1%
+uniform           4.0s        4.0s    0%       4.0s    0%   (no harm on easy jobs)
+random-spikes     3.6s        6.0s   64%       3.6s    3%
+```
+
+Reproduce it yourself: `python examples/demo_shapes.py`.
 
 ## The three modes (you never pick; it uses the best it can)
 
@@ -73,23 +98,6 @@ for tile in runscope.track(tiles, key="satellite",
 ```
 
 Pass prompt=False to skip the question, or measure=True to force Jedi.
-
-## How well does it work?
-
-On heterogeneous or back-loaded workloads (where the cost is hidden from the early
-items), a plain count-based bar is routinely 60 to 280 percent off. RunScope's
-future-sampling cuts that to low single digits:
-
-```text
-shape           actual   plain bar   off   RunScope   off
-heavy-tail        3.9s        1.6s   60%       3.9s    0%
-heavy-middle      4.3s        1.3s   70%       4.3s    0%
-heavy-front       4.3s       16.4s  278%       4.3s    1%
-uniform           4.0s        4.0s    0%       4.0s    0%   (no harm on easy jobs)
-random-spikes     3.6s        6.0s   64%       3.6s    3%
-```
-
-(Reproduce with `python examples/demo_shapes.py`.)
 
 ## What it's good at (and what it isn't)
 
@@ -126,6 +134,14 @@ The insight is the same in both settings: when the quantity you care about is
 concentrated in places you haven't looked yet, a well-designed sample of the
 unobserved population beats extrapolating from what you happened to see first.
 
+## Examples
+
+```bash
+python examples/demo_full.py 3     # Jedi catches a hidden heavy tail
+python examples/demo_full.py 1     # Padawan reacts as the tail hits
+python examples/demo_shapes.py     # accuracy across workload shapes
+```
+
 ## Pricing (after the free period)
 
 Padawan and Master stay free, forever, offline. Jedi becomes part of RunScope Pro:
@@ -134,14 +150,6 @@ Padawan and Master stay free, forever, offline. Jedi becomes part of RunScope Pr
   job-finished or ETA-blowout alerts. Priced to cover cloud costs, not to get rich.
 
 Nothing you can do today with Padawan or Master will ever be gated.
-
-## Examples
-
-```bash
-python examples/demo_full.py 3     # Jedi catches a hidden heavy tail
-python examples/demo_full.py 1     # Padawan reacts as the tail hits
-python examples/demo_shapes.py     # accuracy across workload shapes
-```
 
 ## Contributing and feedback
 
