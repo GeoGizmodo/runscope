@@ -3,6 +3,7 @@
 A progress bar that doesn't lie. Calibrated ETAs and completion intelligence for
 long-running Python jobs.
 
+[![CI](https://github.com/GeoGizmodo/runscope/actions/workflows/ci.yml/badge.svg)](https://github.com/GeoGizmodo/runscope/actions/workflows/ci.yml)
 [![PyPI](https://img.shields.io/pypi/v/runscope.svg)](https://pypi.org/project/runscope/)
 ![Python](https://img.shields.io/pypi/pyversions/runscope.svg)
 [![Downloads](https://img.shields.io/pypi/dm/runscope.svg)](https://pypistats.org/packages/runscope)
