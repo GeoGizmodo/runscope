@@ -14,5 +14,5 @@ Drop-in for tqdm:
 from .api import track, trange
 from .tracker import Tracker, EtaEstimate
 
-__version__ = "0.1.6"
+__version__ = "0.1.8"
 __all__ = ["track", "trange", "Tracker", "EtaEstimate"]

@@ -3,6 +3,18 @@
 All notable changes to RunScope are documented here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.8] - alpha
+
+### Fixed
+- PyPI "Source" / "Issues" / "Changelog" links now correctly point to
+  github.com/GeoGizmodo/runscope (0.1.7 shipped with a placeholder URL by mistake).
+  Removed the dead Documentation link.
+
+## [0.1.7] - alpha
+
+### Changed
+- README science note reworded (removed jargon; clearer margin-of-error phrasing).
+
 ## [0.1.6] - alpha
 
 ### Changed

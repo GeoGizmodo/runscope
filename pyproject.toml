@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "runscope"
-version = "0.1.6"
+version = "0.1.8"
 description = "Calibrated ETAs and completion intelligence for long-running jobs (a smarter progress bar)."
 readme = "README.md"
 requires-python = ">=3.8"
@@ -34,10 +34,9 @@ cloud = ["requests>=2.25"]  # only needed for Pro cloud sync
 
 [project.urls]
 Homepage = "https://runscope.dev"
-Documentation = "https://runscope.dev/docs"
-Source = "https://github.com/runscope/runscope"
-Issues = "https://github.com/runscope/runscope/issues"
-Changelog = "https://github.com/runscope/runscope/blob/main/CHANGELOG.md"
+Source = "https://github.com/GeoGizmodo/runscope"
+Issues = "https://github.com/GeoGizmodo/runscope/issues"
+Changelog = "https://github.com/GeoGizmodo/runscope/blob/main/CHANGELOG.md"
 
 [project.scripts]
 runscope = "runscope.cli:main"
